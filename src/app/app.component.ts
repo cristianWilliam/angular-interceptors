@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -16,7 +17,9 @@ export class AppComponent {
 
   private apiUrl = environment.apiUrl;
 
-  //   login() {
-  //     return this.http;
-  //   }
+  protected userName = signal<string>('');
+
+  login() {
+    console.log(this.userName());
+  }
 }

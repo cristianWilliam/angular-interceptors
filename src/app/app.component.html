@@ -1,7 +1,7 @@
 <div class="login-section">
-    <input type="text" name="user" id="user">
+    <input type="text" name="user" id="user" placeholder="Insert User" [(ngModel)]="userName">
     
-    <button>
+    <button (click)="login()">
         Authenticate 
     </button>
 </div>
