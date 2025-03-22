@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MissaoService } from './services/missao.service';
 import { take } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
 
   protected isAuthenticated = false;
   private missaoService = inject(MissaoService);
+  private authService = inject(AuthService);
 
   protected userName = signal<string>('');
 
@@ -23,6 +25,15 @@ export class AppComponent {
       .pipe(take(1))
       .subscribe((response) => {
         this.isAuthenticated = true;
+        this.authService.setAuthTokens(response.token, response.refreshToken);
+      });
+  }
+
+  checkHeroi() {
+    this.missaoService
+      .checkHeroi()
+      .pipe(take(1))
+      .subscribe((response) => {
         console.log({ response });
       });
   }
