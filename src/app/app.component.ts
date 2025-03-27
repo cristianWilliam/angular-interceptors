@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MissaoService } from './services/missao.service';
-import { take } from 'rxjs';
+import { catchError, take, throwError } from 'rxjs';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -32,8 +32,15 @@ export class AppComponent {
   checkHeroi() {
     this.missaoService
       .checkHeroi()
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        catchError((err) => {
+          this.isAuthenticated = false;
+          return throwError(() => err);
+        })
+      )
       .subscribe((response) => {
+        this.isAuthenticated = true;
         console.log({ response });
       });
   }

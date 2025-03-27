@@ -10,14 +10,14 @@ export class AuthService {
     
     setAuthTokens(token: string, refreshToken: string){
         this.storageService.setItem(STORAGE_TOKEN, token);
-        this.storageService.setItem(STORAGE_REFRESH_TOKEN, token);
+        this.storageService.setItem(STORAGE_REFRESH_TOKEN, refreshToken);
     }
 
     getToken(){
-        return this.storageService.getItem(STORAGE_TOKEN);
+        return this.storageService.getItem<string>(STORAGE_TOKEN);
     }
 
     getRefreshToken(){
-        return this.storageService.getItem(STORAGE_REFRESH_TOKEN);
+        return this.storageService.getItem<string>(STORAGE_REFRESH_TOKEN);
     }
 }

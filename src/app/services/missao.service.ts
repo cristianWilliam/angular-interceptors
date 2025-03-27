@@ -1,15 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   MissaoHeroiLoginRequest,
   MissaoHeroiLoginResponse,
   MissaoHeroiRefreshTokenRequest,
 } from './missao.service.models';
-import {
-  STORAGE_REFRESH_TOKEN,
-  STORAGE_TOKEN,
-} from './storage.service.constants';
+import { STORAGE_REFRESH_TOKEN } from './storage.service.constants';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -28,15 +25,7 @@ export class MissaoService {
   }
 
   checkHeroi() {
-    const token = this.storageService.getItem(STORAGE_TOKEN);
-    if (!token) throw new Error('User não autenticado');
-
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', `Bearer ${token}`);
-
-    return this.httpClient.get<string>(`${this.controllerUrl}/somente-heroi`, {
-      headers,
-    });
+    return this.httpClient.get<string>(`${this.controllerUrl}/somente-heroi`);
   }
 
   refreshToken() {
